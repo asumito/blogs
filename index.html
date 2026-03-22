@@ -1,0 +1,53 @@
+---
+layout: default
+---
+
+<!-- Hero Section -->
+<section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-animated"></div>
+  <div class="absolute inset-0 bg-black/30"></div> <!-- subtle overlay for text readability -->
+
+  <div class="relative z-10 text-center px-6 max-w-4xl">
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-6">
+      Hi, I’m asumito.
+    </h1>
+    <p class="text-xl md:text-2xl text-gray-100 drop-shadow-md leading-relaxed">
+      I’m a student and a server enthusiast. I spend most of my free time tinkering with home labs, breaking configs, and occasionally getting things to work. Always learning, always building.
+    </p>
+  </div>
+</section>
+
+<!-- Recent Posts -->
+<section class="py-16 px-6 bg-white dark:bg-gray-900 transition-colors duration-300">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
+      Recently Added Posts
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {% for post in site.posts limit:3 %}
+        <a href="{{ post.url | relative_url }}" class="group block bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700">
+          <div class="h-48 bg-gradient-to-br from-red-500 to-red-700 relative">
+            <!-- Placeholder image or future featured image -->
+            <div class="absolute inset-0 flex items-center justify-center text-white text-xl font-bold opacity-70">
+              Post Image
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-3 text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+              {{ post.title }}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm line-clamp-3">
+              {{ post.excerpt | strip_html | truncatewords: 40 }}
+            </p>
+            <div class="mt-4 text-sm text-red-600 dark:text-red-400 font-medium">
+              Read more →
+            </div>
+          </div>
+        </a>
+      {% else %}
+        <p class="col-span-3 text-center text-gray-500 dark:text-gray-400">No posts yet. Add your first one in _posts/ !</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>

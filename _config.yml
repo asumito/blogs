@@ -1,0 +1,30 @@
+title: asumito's Blog
+description: Student by day, server tinkerer by night. Home labs, configs, and occasional successes.
+
+baseurl: "/blogs"          # ← This is the important change for project repo
+url: "https://asumito.github.io"   # your username.github.io (no /blogs here)
+
+# For posts
+permalink: /:year/:month/:day/:title/
+future: true
+timezone: Asia/Dhaka
+
+collections:
+  experiences:
+    output: true
+  adventures:
+    output: true
+  programming:
+    output: true
+  os:
+    output: true
+  server:
+    output: true
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+exclude:
+  - Gemfile
+  - Gemfile.lock

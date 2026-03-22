@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" x-data="{ darkMode: localStorage.getItem('darkMode') === 'dark' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches) }" :class="{ 'dark': darkMode }" @dark-mode-change.window="darkMode = $event.detail">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ page.excerpt | default: site.description }}"/>
+
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            accent: '#e53e3e', // nice red for cards/links
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Animated gradient CSS -->
+  <style>
+    .bg-gradient-animated {
+      background: linear-gradient(270deg, #ff6ec7, #7873f5, #00d4ff, #ffdd00, #ff6ec7);
+      background-size: 500% 500%;
+      animation: gradientShift 18s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+
+  <!-- RSS & more -->
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="{{ '/' | relative_url }}">
+        <img src="{{ '/assets/img/logo.jpg' | relative_url }}" alt="asumito's Blog Logo" class="h-12 w-auto">
+      </a>
+
+      <!-- Nav + Toggle -->
+      <div class="flex items-center gap-8">
+        <div class="hidden md:flex gap-6 font-medium">
+          <a href="{{ '/' | relative_url }}" class="hover:text-accent transition">Home</a>
+          <div class="relative group">
+            <span class="hover:text-accent transition cursor-pointer">Life</span>
+            <div class="absolute hidden group-hover:block bg-white dark:bg-gray-800 shadow-lg rounded-lg mt-2 py-2 min-w-[140px]">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Experiences</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Adventures</a>
+            </div>
+          </div>
+          <div class="relative group">
+            <span class="hover:text-accent transition cursor-pointer">Tech</span>
+            <div class="absolute hidden group-hover:block bg-white dark:bg-gray-800 shadow-lg rounded-lg mt-2 py-2 min-w-[140px]">
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Programming</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">OS</a>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Server</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dark mode toggle -->
+        <button 
+          @click="darkMode = !darkMode; localStorage.setItem('darkMode', darkMode ? 'dark' : 'light'); document.dispatchEvent(new CustomEvent('dark-mode-change', { detail: darkMode }))"
+          class="text-2xl focus:outline-none"
+          aria-label="Toggle dark mode"
+        >
+          <span x-show="!darkMode">🌙</span>
+          <span x-show="darkMode">☀️</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main content -->
+  <main class="flex-grow">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-300 py-8 text-center">
+    <p>&copy; {{ 'now' | date: "%Y" }} asumito. Built with Jekyll & Tailwind.</p>
+  </footer>
+
+  <!-- Alpine.js for reactivity (small & no build needed) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+</html>
